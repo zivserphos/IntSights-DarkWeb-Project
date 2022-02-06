@@ -1,14 +1,9 @@
 import mongoose, { ConnectOptions } from "mongoose";
-import dotenv from "dotenv";
-
-dotenv.config();
-const { MONGO_URI } = process.env || "undefined";
-
-// type ConnectOptions = mongodb.MongoClientOptions;
+import config from "../utils/config";
 
 const mongo: Promise<void> = mongoose
   .connect(
-    MONGO_URI as string,
+    config.MONGO_URI as string,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

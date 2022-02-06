@@ -23,13 +23,6 @@ const PasteSchema: Schema = new mongoose.Schema({
   },
 });
 
-Paste.set("toJSON", {
-  transform: (_, returnedObject) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    returnedObject.id = <string>returnedObject._id.toString();
-    delete returnedObject._id;
-  },
-});
+const PasteS = mongoose.model("paste", PasteSchema);
 
-const Paste = mongoose.model("User", PasteSchema);
-export default Paste;
+export default PasteS;

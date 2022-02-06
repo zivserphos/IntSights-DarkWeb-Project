@@ -2,6 +2,7 @@
 import { SocksProxyAgent } from "socks-proxy-agent";
 import axios from "axios";
 import cheerio from "cheerio";
+import PasteSchema from "../db/models/Schema";
 
 const proxy = "socks://localHost:9050";
 const agent = new SocksProxyAgent(proxy);
@@ -36,11 +37,20 @@ const scraper = (html: string) => {
   $(".text").each((_, elem) => contentList.push(genContent($, elem)));
   $("h4").each((_, elem) => titleList.push(genTitle($, elem)));
   const pasteList = titleList.map((_, i) => ({
-    author: authorAndDateList[i].author,
+    author: authorAndDateList[i].author.trim(),
     date: authorAndDateList[i].date,
-    title: titleList[i],
-    content: contentList[i],
+    title: titleList[i].trim(),
+    content: contentList[i].trim(),
   }));
+
+  pasteList.map(async (paste: Paste) => {
+    try {
+      await PasteSchema.deleteMany({});
+      await PasteSchema.create(paste);
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
   return pasteList;
 };
@@ -50,7 +60,6 @@ const request = async (baseURL: string) => {
     const client = axios.create({ baseURL, httpAgent: agent });
     const res = await client.get("/");
     const pasteList = scraper(res.data);
-    console.log(pasteList);
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
