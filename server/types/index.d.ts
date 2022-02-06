@@ -4,3 +4,8 @@ interface Paste {
   content: string;
   date: Date;
 }
+
+interface AuthorAndDate {
+  author: string;
+  date: Date;
+}
