@@ -5,6 +5,10 @@ import cors from "cors";
 import morgan from "morgan";
 import morganHandler from "./middlewares/morgan";
 import errorHandler from "./middlewares/errorHandlers";
+import baseUrl from "./utils/helpers";
+import darkWebRouter from "./routes/ApiRouter";
+
+console.log(baseUrl);
 
 const app = express();
 
@@ -19,6 +23,8 @@ app.use(
 app.get("/", (_req, res) => {
   res.send("hello world");
 });
+
+app.use("/bb", darkWebRouter);
 app.use(errorHandler);
 
 export default app;

@@ -1,5 +1,4 @@
 import app from "./app";
-import "./db/mongo";
 
 const PORT = process.env.PORT || 3001;
 
