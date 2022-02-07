@@ -1,7 +1,8 @@
 import React from "react";
+import HomePage from "./components";
 
-const App = function x() {
-  return <div className="App">hello world</div>;
+const App = function () {
+  return <HomePage />;
 };
 
 export default App;

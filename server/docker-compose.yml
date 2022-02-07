@@ -9,20 +9,28 @@ services:
     # networks:
     #   - backend
     ports:  
-      - '80:3001'
-    links: 
-      - mongo
+        - '80:3001'
+    networks: #here
+        - my-network
   mongo:
     container_name: pastes-mongo
     image: mongo
     ports:
     - '27017:27017'
+    networks: #here
+        - my-network
+  darknet: 
+    image: dperson/torproxy
+    container_name: tor-proxy
+    ports: 
+      - '8118:8118'
+    expose:
+      - 8118
+
+networks: #here
+    my-network:
+        driver: bridge
 
 
-# darknet: 
-#     image: dperson/toproxy
-#     expose: 8118
-#     ports:
-#       - '8118-8118'
-#     networks:
-#       - 'backend'
+
+

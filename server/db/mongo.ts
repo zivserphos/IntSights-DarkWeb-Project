@@ -13,6 +13,7 @@ const mongo: Promise<void> = mongoose
     console.log("Connected to mongo successfully");
   })
   .catch((error) => {
+    console.log(config.MONGO_DOCKER);
     console.log("error connecting to MongoDB:", error.message);
   });
 

@@ -1,9 +1,8 @@
-interface Paste {
+interface PasteI {
   author: string;
   title: string;
   content: string;
   date: Date;
-  id?: string;
 }
 
 interface AuthorAndDate {
