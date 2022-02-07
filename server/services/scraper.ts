@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { SocksProxyAgent } from "socks-proxy-agent";
 import axios from "axios";
@@ -56,8 +57,8 @@ const request = async (baseURL: string) => {
     const client = axios.create({ baseURL, httpAgent: agent });
     const res = await client.get("/");
     const pasteList = scraper(res.data);
-    return res.data;
-  } catch (error) {
+    return pasteList;
+  } catch (error: any) {
     if (axios.isAxiosError(error)) {
       console.error(error.message);
     }

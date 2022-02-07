@@ -1,8 +1,8 @@
 import { Router } from "express";
-import getPage from "../controllers/ApiController";
+import sse from "../controllers/ApiController";
 
 const router = Router();
 
-router.get("/", getPage);
+router.get("/", sse);
 
 export default router;

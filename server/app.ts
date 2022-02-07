@@ -24,7 +24,7 @@ app.get("/", (_req, res) => {
   res.send("hello world");
 });
 
-app.use("/bb", darkWebRouter);
+app.use("/dashboard", darkWebRouter);
 app.use(errorHandler);
 
 export default app;
