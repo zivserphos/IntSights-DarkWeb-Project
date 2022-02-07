@@ -58,7 +58,7 @@ const request = async (baseURL: string) => {
     const res = await client.get("/");
     const pasteList = scraper(res.data);
     return pasteList;
-  } catch (error: any) {
+  } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(error.message);
     }

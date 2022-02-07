@@ -3,7 +3,7 @@ import config from "../utils/config";
 
 const mongo: Promise<void> = mongoose
   .connect(
-    config.MONGO_URI as string,
+    config.MONGO_DOCKER as string,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

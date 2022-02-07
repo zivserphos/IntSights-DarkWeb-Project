@@ -5,11 +5,13 @@ import baseUrl from "../utils/helpers";
 import writeEvent from "../services/sse";
 import config from "../utils/config";
 
-const sse: Handler = (req, res) => {
+// console.log(config.SEND_INTERVAL);
+
+const sse: Handler = (req, res, next) => {
   if (req.headers.accept === "text/event-stream") {
     sendEvent(res);
   } else {
-    res.json({ message: "Ok" });
+    next({ status: 400, message: { error: "Invalid headers" } });
   }
 };
 
@@ -17,7 +19,7 @@ const sendEvent = (res: Response) => {
   res.writeHead(200, {
     "Cache-Control": "no-cache",
     Connection: "keep-alive",
-    "Content-Type": "text/event-stream",
+    "Content-Type": "aplication/json",
   });
 
   const sseId = new Date().toDateString();
@@ -25,52 +27,12 @@ const sendEvent = (res: Response) => {
   setInterval(async () => {
     const data = JSON.stringify(await scraper(baseUrl));
     console.log(data);
-    writeEvent(res, sseId, JSON.stringify(await scraper(baseUrl)));
+    let i = 0;
+    if (i === 0) {
+      i += 1;
+      writeEvent(res, sseId, JSON.stringify(await scraper(baseUrl)));
+    }
   }, config.SEND_INTERVAL);
 };
 
 export default sse;
-
-// eslint-disable-next-line no-return-await
-// const sse: Handler = async (req, res) => {
-//   if (req.headers.accept === "text/event-stream") {
-//     sendEvent(req, res);
-//   } else {
-//     res.json({ message: "Ok" });
-//   }
-//   // const response = await request(baseUrl);
-//   // res.send(response);
-// };
-
-// const SEND_INTERVAL = 2000;
-
-// const writeEvent = (res: Response, sseId: string, data: string) => {
-//   res.write(`id: ${sseId}\n`);
-//   res.write(`data: ${data}\n\n`);
-// };
-
-// const sendEvent = (_req: Request, res: Response) => {
-//   res.writeHead(200, {
-//     "Cache-Control": "no-cache",
-//     Connection: "keep-alive",
-//     "Content-Type": "text/event-stream",
-//   });
-
-//   const sseId = new Date().toDateString();
-
-//   setInterval(() => {
-//     writeEvent(res, sseId, JSON.stringify(donation));
-//   }, SEND_INTERVAL);
-
-//   writeEvent(res, sseId, JSON.stringify(donation));
-// };
-
-// // app.get("/dashboard", (req: Request, res: Response) => {
-// //   if (req.headers.accept === "text/event-stream") {
-// //     sendEvent(req, res);
-// //   } else {
-// //     res.json({ message: "Ok" });
-// //   }
-// // });
-
-// export default getPage;

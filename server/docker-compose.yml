@@ -1,0 +1,28 @@
+version: '3'
+services: 
+  app: 
+    container_name: pastes
+    restart: always
+    build: .
+    # depends_on:
+    #   - darknet
+    # networks:
+    #   - backend
+    ports:  
+      - '80:3001'
+    links: 
+      - mongo
+  mongo:
+    container_name: pastes-mongo
+    image: mongo
+    ports:
+    - '27017:27017'
+
+
+# darknet: 
+#     image: dperson/toproxy
+#     expose: 8118
+#     ports:
+#       - '8118-8118'
+#     networks:
+#       - 'backend'
