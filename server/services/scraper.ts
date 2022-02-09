@@ -65,6 +65,8 @@ const scraper = (html: string) => {
 
 const request = async (baseURL: string) => {
   try {
+    // const client = axios.create({ baseURL, httpAgent: agent });
+    // const res = await client.get("/");
     const res = await axios.get(baseURL, { proxy });
     const pasteList = scraper(res.data);
     return pasteList;
