@@ -4,10 +4,6 @@ services:
     container_name: pastes
     restart: always
     build: .
-    # depends_on:
-    #   - darknet
-    # networks:
-    #   - backend
     ports:  
         - '80:3001'
     networks: #here

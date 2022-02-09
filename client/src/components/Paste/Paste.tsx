@@ -1,24 +1,6 @@
-// import React from "react";
-
-// const Paste = function ({ paste }: { paste: PasteI }) {
-//   console.log(paste);
-//   return (
-//     <div className="paste">
-//       <div className="title">{paste.title}</div>
-//       <div className="author">{paste.author}</div>
-//       <div className="paste-date">{paste.date}</div>
-//       <div className="content">{paste.content}</div>
-//     </div>
-//   );
-// };
-
-// export default Paste;
-
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 const Paste = function ({ paste }: { paste: PasteI }) {

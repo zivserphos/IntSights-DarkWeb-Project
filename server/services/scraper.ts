@@ -25,7 +25,6 @@ const genAuthorAndDate = (
     .split("Posted by")[1] // gives you string like that {Author} at {Date}
     .split("at"); // split into title[0] and date[1]
   const date = new Date(details[1]); // date
-
   const author = details[0]; // title
   return { date, author };
 };

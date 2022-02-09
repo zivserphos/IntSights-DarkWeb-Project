@@ -1,4 +1,3 @@
-import { PasswordType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import getCategory from "./getCategory";
 
 /* eslint-disable no-restricted-syntax */
