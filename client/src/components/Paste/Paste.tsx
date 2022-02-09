@@ -15,41 +15,28 @@
 // export default Paste;
 
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-// const bull = (
-//   <Box
-//     component="span"
-//     sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-//   >
-//     •
-//   </Box>
-// );
-
 const Paste = function ({ paste }: { paste: PasteI }) {
   return (
-    <div>
-      <Card sx={{ minWidth: 275, height: 400 }}>
+    <div style={{ overflowWrap: "break-word" }}>
+      <Card sx={{ minWidth: 275 }}>
         <CardContent>
           <Typography sx={{ fontSize: 16 }} color="purple" gutterBottom>
-            {paste.date}
+            {new Date(paste.date).toUTCString()}
           </Typography>
           <Typography variant="h5" component="div">
             {paste.title}
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            adjective
+          <Typography sx={{ mb: 1.5, fontSize: "1.2rem" }} color="red">
+            #{paste.category}
           </Typography>
           <Typography variant="body2">{paste.content}</Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
       </Card>
     </div>
   );

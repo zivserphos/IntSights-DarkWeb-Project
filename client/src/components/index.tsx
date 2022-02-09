@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import "./styles.scss";
 import Paste from "./Paste/Paste";
+import NavBar from "./navbar/NavBar";
 
 const HomePage = function () {
   const [pastes, setPastes] = useState<PasteI[]>([]);
@@ -32,7 +33,8 @@ const HomePage = function () {
   }, [pastes]);
   return (
     <div className="home">
-      <h1>Full stack web quizzes</h1>
+      <NavBar />
+      <h1>The site I would not show to my mom</h1>
       <Grid
         container
         direction="row"

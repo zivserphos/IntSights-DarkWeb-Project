@@ -4,6 +4,7 @@ import { SocksProxyAgent } from "socks-proxy-agent";
 import axios from "axios";
 import cheerio from "cheerio";
 import PasteSchema from "../db/models/Paste";
+import getCategory from "./category/getCategory";
 
 const proxy = "socks://localHost:9050";
 // const proxy = {
@@ -24,6 +25,7 @@ const genAuthorAndDate = (
     .split("Posted by")[1] // gives you string like that {Author} at {Date}
     .split("at"); // split into title[0] and date[1]
   const date = new Date(details[1]); // date
+
   const author = details[0]; // title
   return { date, author };
 };
@@ -49,6 +51,7 @@ const scraper = (html: string) => {
     date: authorAndDateList[i].date,
     title: titleList[i].trim(),
     content: contentList[i].trim(),
+    category: getCategory(contentList[i].trim()),
   }));
 
   pasteList.map(async (paste: Paste) => {
