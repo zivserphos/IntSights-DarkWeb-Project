@@ -26,7 +26,7 @@ const sendEvent = async (res: Response) => {
   setInterval(async () => {
     const response = await scraper(baseUrl);
     writeEvent(res, sseId, JSON.stringify(response));
-  }, 10000);
+  }, config.SEND_INTERVAL);
   const response = await scraper(baseUrl);
   writeEvent(res, sseId, JSON.stringify(response));
 };

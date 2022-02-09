@@ -2,19 +2,20 @@ version: '3'
 services: 
   app: 
     container_name: pastes
-    restart: always
     build: .
     ports:  
-        - '80:3001'
-    networks: #here
-        - my-network
+        - '3001:3001'
+    # networks: #here
+    #     - my-network
+    restart: always
   mongo:
     container_name: pastes-mongo
     image: mongo
     ports:
-    - '27017:27017'
-    networks: #here
-        - my-network
+        - '27017:27017'
+    restart: always
+    # networks: #here
+    #     - my-network
   darknet: 
     image: dperson/torproxy
     container_name: tor-proxy
@@ -22,10 +23,18 @@ services:
       - '8118:8118'
     expose:
       - 8118
+    restart: always
+  mongo-express:
+    image: mongo-express
+    container_name: database-client
+    restart: always
+    ports:
+      - 8081:8081
 
-networks: #here
-    my-network:
-        driver: bridge
+
+# networks: #here
+#     my-network:
+#         driver: bridge
 
 
 

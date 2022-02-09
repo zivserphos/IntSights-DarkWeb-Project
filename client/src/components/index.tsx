@@ -42,11 +42,13 @@ const HomePage = function () {
         alignItems="streach"
         style={{ height: "100%", width: "100%", minHeight: "280px" }}
       >
-        {pastes.map((paste) => (
-          <Grid item xs={6} sm={4} md={3} lg={3}>
-            <Paste paste={paste} />
-          </Grid>
-        ))}
+        {pastes
+          ? pastes.map((paste) => (
+              <Grid item xs={6} sm={4} md={3} lg={3}>
+                <Paste paste={paste} />
+              </Grid>
+            ))
+          : ""}
       </Grid>
     </div>
   );

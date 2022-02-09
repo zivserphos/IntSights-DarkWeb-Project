@@ -3,15 +3,16 @@
 import { SocksProxyAgent } from "socks-proxy-agent";
 import axios from "axios";
 import cheerio from "cheerio";
+
 import PasteSchema from "../db/models/Paste";
 import getCategory from "./category/getCategory";
 
-const proxy = "socks://localHost:9050";
-// const proxy = {
-//   host: "tor-proxy",
-//   port: 8118,
-// };
-const agent = new SocksProxyAgent(proxy);
+// const proxy = "socks://localHost:9050";
+const proxy = {
+  host: "tor-proxy",
+  port: 8118,
+};
+// const agent = new SocksProxyAgent(proxy);
 
 const genAuthorAndDate = (
   $: cheerio.Root,
@@ -54,20 +55,17 @@ const scraper = (html: string) => {
   }));
 
   pasteList.map(async (paste: Paste) => {
-    const isExist = PasteSchema.find({ id: paste.id });
-    if (!isExist)
+    const isExist = await PasteSchema.find({ id: paste.id });
+    if (isExist.length === 0)
       await PasteSchema.create(paste).catch((err) => console.log(err));
   });
-
-  authorAndDateList.map((q) => console.log(q));
 
   return pasteList;
 };
 
 const request = async (baseURL: string) => {
   try {
-    const client = axios.create({ baseURL, httpAgent: agent });
-    const res = await client.get("/");
+    const res = await axios.get(baseURL, { proxy });
     const pasteList = scraper(res.data);
     return pasteList;
   } catch (error) {
