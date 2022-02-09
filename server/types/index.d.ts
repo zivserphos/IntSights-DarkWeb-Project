@@ -4,6 +4,7 @@ interface Paste {
   content: string;
   date: Date;
   id?: string;
+  category?: string;
 }
 
 interface AuthorAndDate {

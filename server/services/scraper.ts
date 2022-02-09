@@ -44,7 +44,7 @@ const scraper = (html: string) => {
   $(".text").each((_, elem) => contentList.push(genContent($, elem)));
   $("h4").each((_, elem) => titleList.push(genTitle($, elem)));
   $("a");
-  const pasteList = titleList.map((_, i) => ({
+  const pasteList = contentList.map((_, i) => ({
     author: authorAndDateList[i].author.trim(),
     date: authorAndDateList[i].date,
     title: titleList[i].trim(),
@@ -57,6 +57,8 @@ const scraper = (html: string) => {
       await PasteSchema.create(paste).catch((err) => console.log(err));
   });
 
+  authorAndDateList.map((q) => console.log(q));
+
   return pasteList;
 };
 
@@ -65,11 +67,12 @@ const request = async (baseURL: string) => {
     const client = axios.create({ baseURL, httpAgent: agent });
     const res = await client.get("/");
     const pasteList = scraper(res.data);
-    return res.data;
+    return pasteList;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(error.message);
     }
+    console.log(error);
     return "Failed.";
   }
 };
