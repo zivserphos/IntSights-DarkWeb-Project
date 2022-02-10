@@ -16,6 +16,9 @@ import searchInput from "../../recoil/atoms";
 
 const NavBar = function () {
   const setCurrInput = useSetRecoilState(searchInput);
+  const inputChanged = (target: HTMLInputElement) => {
+    setCurrInput(target.value);
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -41,8 +44,11 @@ const NavBar = function () {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
+
             <StyledInputBase
-              //   onChange={(e: React.FormEvent) => inputChanged(e)}
+              onChange={(e: React.FormEvent) =>
+                inputChanged(e.target as HTMLInputElement)
+              }
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
