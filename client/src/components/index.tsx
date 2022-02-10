@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import "./styles.scss";
@@ -6,13 +7,16 @@ import { useRecoilState } from "recoil";
 import { Notyf } from "notyf";
 import Paste from "./Paste/Paste";
 import NavBar from "./navbar/NavBar";
+import Dashboard from "./dashbaord/Dashboard";
 import searchInput from "../recoil/atoms";
 import filterPastes from "../utils/filterPastes";
+import initalStats from "../utils/initialStats";
 import "notyf/notyf.min.css";
 
 const HomePage = function () {
   const [allPastes, setAllPastes] = useState<PasteI[]>([]);
   const [filteredPastes, setFilteredPastes] = useState<PasteI[]>([]);
+  const [stats, setStats] = useState<Percentage>(initalStats);
   const [inputState] = useRecoilState(searchInput);
   const notyf = new Notyf();
 
@@ -31,10 +35,14 @@ const HomePage = function () {
     });
 
     source.addEventListener("message", (e) => {
+      console.log(e.data);
       notyf.success("pastes has been updated");
-      const data = JSON.parse(e.data);
-
-      setAllPastes(data);
+      // const { pastes, stats }: { pastes: PasteI[]; stats: Percentage } = e;
+      const updatedPastes = JSON.parse(e.data).pastes;
+      const updatedStats = JSON.parse(e.data).stats;
+      console.log(updatedStats);
+      setStats(updatedStats);
+      setAllPastes(updatedPastes);
     });
 
     source.addEventListener("error", () => {
@@ -48,6 +56,7 @@ const HomePage = function () {
   return (
     <div className="home">
       <NavBar />
+      <Dashboard percentage={stats} />
       <h1>The site I would not show to my mom</h1>
       <Grid
         container

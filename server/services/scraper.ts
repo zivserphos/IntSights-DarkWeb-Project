@@ -63,13 +63,14 @@ const scraper = (html: string) => {
   return pasteList;
 };
 
-const request = async (baseURL: string) => {
+const mainScraper = async (baseURL: string) => {
   try {
     // const client = axios.create({ baseURL, httpAgent: agent });
     // const res = await client.get("/");
+    // const pasteList = scraper(res.data);
+    // return pasteList;
     const res = await axios.get(baseURL, { proxy });
-    const pasteList = scraper(res.data);
-    return pasteList;
+    return scraper(res.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(error.message);
@@ -79,4 +80,4 @@ const request = async (baseURL: string) => {
   }
 };
 
-export default request;
+export default mainScraper;

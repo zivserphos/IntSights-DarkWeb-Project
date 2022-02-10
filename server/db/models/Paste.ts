@@ -21,6 +21,9 @@ const PasteSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+  },
 });
 
 const PasteS = mongoose.model("paste", PasteSchema);
