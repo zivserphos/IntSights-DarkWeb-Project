@@ -2,7 +2,7 @@ version: '3'
 services: 
   app: 
     container_name: pastes
-    build: .
+    build: ./server
     ports:  
         - '3001:3001'
     restart: always
@@ -26,6 +26,12 @@ services:
     restart: always
     ports:
       - 8081:8081
+  front: 
+    build: './client'
+    ports: 
+      - 3000:3000
+
+
 
 
 
