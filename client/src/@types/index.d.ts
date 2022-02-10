@@ -3,7 +3,7 @@ interface PasteI {
   title: string;
   content: string;
   date: Date;
-  category?: string[];
+  category?: string;
 }
 
 interface AuthorAndDate {
