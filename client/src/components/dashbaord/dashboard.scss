@@ -1,8 +1,11 @@
-.wrap-doughnut {
+.dashboardDiv{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    .doughnutDiv {
-        width: 17rem;
-    }
-}
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .doughnutDiv{
+    width: 32%;
+  }
+  .barChartDiv{
+    width: 48%;
+  }

@@ -7,12 +7,12 @@ import cheerio from "cheerio";
 import PasteSchema from "../db/models/Paste";
 import getCategory from "./category/getCategory";
 
-// const proxy = "socks://localHost:9050";
-const proxy = {
-  host: "tor-proxy",
-  port: 8118,
-};
-// const agent = new SocksProxyAgent(proxy);
+const proxy = "socks://localHost:9050";
+// const proxy = {
+//   host: "tor-proxy",
+//   port: 8118,
+// };
+const agent = new SocksProxyAgent(proxy);
 
 const genAuthorAndDate = (
   $: cheerio.Root,
@@ -30,9 +30,14 @@ const genAuthorAndDate = (
   return { date, author };
 };
 
+// const urlId = (
+//   container.querySelectorAll(".col-sm-7.text-right a")[0] as HTMLAnchorElement
+// ).href;
+// const id = urlId.substring(urlId.lastIndexOf("/") + 1);
+
 const genTitle = ($: cheerio.Root, elem: cheerio.Element) => $(elem).text();
 const genContent = ($: cheerio.Root, elem: cheerio.Element) => $(elem).text();
-const pasteId = ($: cheerio.Root, elem: cheerio.Element) => $(elem).text();
+const genPasteId = ($: cheerio.Root, elem: cheerio.Element) => $(elem).text();
 
 const scraper = (html: string) => {
   const $ = cheerio.load(html); // Load the HTML string into cheerio
@@ -45,6 +50,9 @@ const scraper = (html: string) => {
   }); // Parse the HTML and extract just whatever code contains .statsTableContainer and has tr inside
   $(".text").each((_, elem) => contentList.push(genContent($, elem)));
   $("h4").each((_, elem) => titleList.push(genTitle($, elem)));
+  const genId = $(".col-sm-7 > .text-right > a").each((_, elem) => {
+    pasteIdsList.push(genPasteId($, elem));
+  });
   $("a");
   const pasteList = contentList.map((_, i) => ({
     author: authorAndDateList[i].author.trim(),
@@ -65,11 +73,11 @@ const scraper = (html: string) => {
 
 const mainScraper = async (baseURL: string) => {
   try {
-    // const client = axios.create({ baseURL, httpAgent: agent });
-    // const res = await client.get("/");
+    const client = axios.create({ baseURL, httpAgent: agent });
+    const res = await client.get("/");
     // const pasteList = scraper(res.data);
     // return pasteList;
-    const res = await axios.get(baseURL, { proxy });
+    // const res = await axios.get(baseURL, { proxy });
     return scraper(res.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {

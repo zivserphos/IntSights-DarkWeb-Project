@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import { Notyf } from "notyf";
 import Paste from "./Paste/Paste";
 import NavBar from "./navbar/NavBar";
-import Dashboard from "./dashbaord/Dashboard";
+import Dashboard from "./dashbaord";
 import searchInput from "../recoil/atoms";
 import filterPastes from "../utils/filterPastes";
 import initalStats from "../utils/initialStats";
